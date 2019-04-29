@@ -54,13 +54,14 @@ section > div {
     background-color: #e0e0e0;
 }
 
-@media (max-width:700px){
-    article {width: 95%;}
-    header span {display: none;}
-} 
 
 @media (max-width:500px){
     section > div {
         width: 49%;
     }
 }
+
+@media (max-width:700px){
+    article {width: 95%;}
+    header > div > span {display: none;}
+} 
