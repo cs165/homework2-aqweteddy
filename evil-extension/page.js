@@ -11,18 +11,31 @@ const MATCH_LIST = {
 };
 
 function transformTextNodes(node) {
-  // node = node.innerHTML
-  // console.log(node)
-  // for(var pat in MATCH_LIST){
-  //   // console.log(pat)
-  //   node = node.replace(pat, MATCH_LIST[pat])
-  // }
-  if (node.nodeType == Node.TEXT_NODE) {
-    for (var pat in MATCH_LIST)
-      node.textContent = node.textContent.replace(pat, MATCH_LIST[pat])
+  if (node.nodeType === Node.TEXT_NODE) {
+    var text = ""
+    for (word of node.textContent.split(' ')) {
+      var fl = false
+
+      for (var pat in MATCH_LIST) {
+        if (word.indexOf(pat) != -1) {
+          console.log(word)
+          text = text.concat(' ', word.replace(pat, MATCH_LIST[pat]))
+          fl = true
+          break
+        }
+      }
+      if(fl == false){
+        text = text.concat(' ', word)
+      }
+    }
+    node.textContent = text
+    return
   }
-  for (son of node.childNodes)
-    transformTextNodes(son)
+
+  for (son of node.childNodes) {
+    if (son.tagName != 'style' && son.tagName != 'script')
+      transformTextNodes(son)
+  }
   // TODO(you): Implement this function! See HW spec for details.
 }
 
